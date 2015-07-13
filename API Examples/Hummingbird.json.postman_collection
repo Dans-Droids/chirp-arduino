@@ -1,0 +1,35 @@
+{
+	"id": "dbcd8ce1-4b26-d516-a820-385f6113f7ac",
+	"name": "Chirp: Hummingbird",
+	"description": "",
+	"order": [
+		"8e9c332b-e5b6-8647-5bb4-c4496698db50"
+	],
+	"folders": [],
+	"timestamp": 1436804581448,
+	"owner": "",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "8e9c332b-e5b6-8647-5bb4-c4496698db50",
+			"headers": "X-chirp-hummingbird-key: YOUR-24-CHAR-HUMMINGBIRD-KEY\n",
+			"url": "http://hummingbird.chirp.io:1254/chirp",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1436805012083,
+			"name": "Hummingbird Hello World",
+			"description": "## Hummingbird Hello World\n\nCreates a plaintext chirp using Hummingbird, returning its audio longcode ready for playback on a small device.",
+			"collectionId": "dbcd8ce1-4b26-d516-a820-385f6113f7ac",
+			"responses": [],
+			"rawModeData": "{\n    \"mimetype\" : \"text/plain\",\n    \"body\" : \"Hello world\",\n    \"title\" : \"Hello\"\n}"
+		}
+	]
+}
