@@ -3,7 +3,8 @@
 	"name": "Chirp: Hummingbird",
 	"description": "",
 	"order": [
-		"8e9c332b-e5b6-8647-5bb4-c4496698db50"
+		"8e9c332b-e5b6-8647-5bb4-c4496698db50",
+		"44152751-1d89-31af-3b52-f6e751938317"
 	],
 	"folders": [],
 	"timestamp": 1436804581448,
@@ -11,6 +12,26 @@
 	"remoteLink": "",
 	"public": false,
 	"requests": [
+		{
+			"id": "44152751-1d89-31af-3b52-f6e751938317",
+			"headers": "X-chirp-hummingbird-key: YOUR-24-CHAR-HUMMINGBIRD-KEY\n",
+			"url": "http://hummingbird.chirp.io:1254/chirp",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1436909168302,
+			"name": "Hummingbird: Link",
+			"description": "Creates a chirp containing a link via Hummingbird, returning its audio longcode ready for playback on a small device.",
+			"collectionId": "dbcd8ce1-4b26-d516-a820-385f6113f7ac",
+			"responses": [],
+			"rawModeData": "{\n    \"mimetype\" : \"text/x-url\",\n    \"url\" : \"http://www.audubon.org/birds-of-america/\",\n    \"title\" : \"Birds of America\"\n}"
+		},
 		{
 			"id": "8e9c332b-e5b6-8647-5bb4-c4496698db50",
 			"headers": "X-chirp-hummingbird-key: YOUR-24-CHAR-HUMMINGBIRD-KEY\n",
@@ -24,9 +45,9 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1436805012083,
-			"name": "Hummingbird Hello World",
-			"description": "## Hummingbird Hello World\n\nCreates a plaintext chirp using Hummingbird, returning its audio longcode ready for playback on a small device.",
+			"time": 1436909194131,
+			"name": "Hummingbird: Text",
+			"description": "Creates a plaintext chirp using Hummingbird, returning its audio longcode ready for playback on a small device.",
 			"collectionId": "dbcd8ce1-4b26-d516-a820-385f6113f7ac",
 			"responses": [],
 			"rawModeData": "{\n    \"mimetype\" : \"text/plain\",\n    \"body\" : \"Hello world\",\n    \"title\" : \"Hello\"\n}"
