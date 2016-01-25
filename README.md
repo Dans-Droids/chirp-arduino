@@ -12,6 +12,6 @@ Libraries for Arduino and Spark Core devices to create and send chirps.
 
 ***
 
-This document is part of the [Chirp Developer Resources](http://chirp.io).
+This document is part of the [Chirp developer resources](http://chirp.io).
 
 All content copyright &copy; Asio Ltd, 2013-2016. All rights reserved.
