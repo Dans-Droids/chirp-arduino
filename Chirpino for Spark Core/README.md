@@ -1,12 +1,10 @@
 # Chirpino
+
 ###for Spark Core
 
-Version 1.0 May 2015
-**[Chirp](http://chirp.io)**
+Version 1.1, January 2016
 
 ## Overview
-
-
 
 **Chirpino** is a program for Arduinos and other microcontrollers to let you create, play and store lists of chirps; this document describes the version for Spark Core. **Chirpino** lets you store playlists of chirp codes and create chirps for text messages and URLs so they can be picked up by anyone with a phone or other device running the free **Chirp** app. You can use its functionality as written or you can use it as an example to help you create your own programs exploring the world of chirps.
 

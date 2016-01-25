@@ -1,11 +1,12 @@
-#ChirpinoLink
+# ChirpinoLink
 
-###for Arduino with Ethernet Shield
-Version 1.0 May 2015
+### for Arduino with Ethernet Shield
+Version 1.1, January 2016
 
 [chirp.io](http://chirp.io)
 
-###Overview
+### Overview
+
 ChirpinoLink is a library enabling Arduinos to interact with the hummingbird.chirp.io server to create new chirps for pieces of text and for URLs, and to query chirp codes for the information associated with them.
 
 The highly simplified JSON API that is used to let your device communicate with Chirp is outlined in the nearby document **hummingbird API 1.0.md**.
