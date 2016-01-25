@@ -14,3 +14,9 @@ ChirpinoSing is a library enabling Arduino-based devices to output chirp audio v
  * an iOS or Android device running the Chirp SDK to receive the chirps transmitted
 
 ChirpinoSing is fully described in the included [ChirpinoSing.pdf](ChirpinoSing.pdf).
+
+***
+
+This document is part of the [Chirp developer resources](http://chirp.io).
+
+All content copyright &copy; Asio Ltd, 2013-2016. All rights reserved.

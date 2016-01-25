@@ -352,3 +352,9 @@ Triggers are most useful when you add your own. Each needs a tag and a script (e
 #### Spark only
 
 Chirpino on the Spark Core exposes a function called `do` to the web using Spark's cloud command system. Any string you supply here will be interpreted as a command, allowing you to control Chirpino from your specially-constructed web page.
+
+***
+
+This document is part of the [Chirp developer resources](http://chirp.io).
+
+All content copyright &copy; Asio Ltd, 2013-2016. All rights reserved.

@@ -349,3 +349,9 @@ is equivalent to 'pressing' the right button.
 will cause another chirp to be played every two minutes.
 
 Triggers are most useful when you add your own. Each needs a tag and a script (each of which could, as above, be simply a single character). They have an update method that's called every time around the main loop (so very frequently), and an action method that can be called by update when the conditions are right. You could check sensors, track the time, perform calculations or whatever you like really. Take a look in Triggers.cpp; they're pretty simple.
+
+***
+
+This document is part of the [Chirp developer resources](http://chirp.io).
+
+All content copyright &copy; Asio Ltd, 2013-2016. All rights reserved.

@@ -13,3 +13,9 @@ The highly simplified JSON API that is used to let your device communicate with 
 Using ChirpinoLink requires that you obtain an API key from Chirp. You can sign up for one **[here](http://chirp.io/hello-developers/)**.
 
 One example program is provided at present, and more will follow very shortly, together with more extensive documentation. The Chirpino program for Arduino Mega2560 with ethernet card (also available in this chirpino repository) makes extensive use of ChirpinoLink together with the audio synthesis library ChirpinoSing. You can regard the Chirpino program as a very large example program for both ChirpinoLink and ChirpinoSing.
+
+***
+
+This document is part of the [Chirp developer resources](http://chirp.io).
+
+All content copyright &copy; Asio Ltd, 2013-2016. All rights reserved.
