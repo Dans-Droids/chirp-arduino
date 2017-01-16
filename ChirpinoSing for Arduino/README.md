@@ -1,6 +1,4 @@
-#Chirpino
-
-## Chirp Audio for Arduino
+# Chirpino
 
 *Version 2.0, January 2016*
 
@@ -13,9 +11,6 @@ Chirpino is a library enabling Arduino-based devices to output chirp audio via a
  * A list of Encoded Identifiers to send. (test identifiers are provided in the examples)
  * an iOS or Android device running a Chirp-enabled app to receive the chirps transmitted
 
-## Overview
-Chirpino enables Arduinos (and UCL Engduinos) to output chirps as described at developer.chirp.io through attached audio hardware.
-
 You'll need an Arduino Uno (or a board with an equivalent processor such as the Arduino Ethernet) an Arduino Mega 2560 or an Engduino. For sound output you will need a compatible speaker or other device (we have found just connecting an earbud directly to the pins works, although it is likely to be overdriving the earbud), chirp codes from chirp.io (test codes are provided in the examples), and something such as smartphone running a chirp-enabled app to listen out for the chirps emitted.
 
 ## Installing Chirpino
@@ -24,7 +19,7 @@ Chirpino is written for the Arduino IDE versions 1.0.6 and above, including 1.6.
 
 Install Chirpino as a library. For instructions, see 
 
-http://arduino.cc/en/Guide/Libraries
+[http://arduino.cc/en/Guide/Libraries](http://arduino.cc/en/Guide/Libraries)
 
 Once installed, you can access the example programs from the menu :
 
@@ -60,22 +55,21 @@ The signal supplied is a 62.5kHz, pulse width modulated (PWM) approximation to a
 
 Although amplification & smoothing circuitry would be ideal, if you want to keep things simple you can attach a small speaker or an earbud directly to the Arduino pins. The exact nature of the smoothing, and so the fine characteristics of the sound, will depend on the particular hardware that you attach. We have had success directly connecting the pins to a 3.5mm audio lead and plugging this into a device such as an old radio. Please be aware that such a signal won't match the official audio jack electrical specifications (so keep the volume low), and you will certainly be overdriving an earbud if you connect it this way (don’t put it in your ear!). Whatever hardware you connect to the Arduino you do at your own risk; it's your responsibility to check for compatibility.
 
-## Pulse Width Modulation
+#### Pulse Width Modulation
 
 The signal generated approximates a sine wave that is changing continuously as appropriate for a chirp. However, the Arduino can't supply a true variable analog output; at any one time a pin may only ever be switched on (5V or 2.7V depending on device) or off (0V). So to approximate a sine wave the pin is pulsed rapidly, with 62500 pulses being issued every second (one every 16 microseconds) under the assumption that this pulse train will be smoothed (averaged over time). The targeted Arduinos run at 16MHz so a new pulse is issued every 256 clock cycles, the Engduino runs at 8MHz so issue one every 128 clock cycles. In each 16-microsecond period the pin is only turned on for a fraction of the time, from 0% (0V, not turned on at all) to 100% (5V on an Arduino, turned on the whole time). For instance, to approximate a 3.75V signal (75% of 5V) the pulse will be switched on for 192 clock cycles, that is 12 microseconds (75% of the time). Since we are approximating a continuously varying sinusoidal signal, each successive pulse is likely to be on for a different time than its predecessor. This description is provided only to help you to understand the output signal; the generation of these pulses is fully handled for you by the synthesiser. 
 
-## Chirps Codes
+## Chirps Identifiers
 
-Chirps are specified by strings containing 18 characters. Each character selects one of 32 tones; it must be either a digit (0-9) or one of the first 22 lower-case letters (a-v). Eg:
-      "ntdb982ilj6etj6e3l"
-When chirps are played, two extra tones (corresponding to tones h and j) are prepended to the 18 characters you supply to make 20 in total. Chirp codes from chirp.io contain some data and some error correction characters based on the data. Chirpino will play any string of the correct length and characters, but only strings from chirp.io contain the valid error correction codes that let listening devices receive them properly, and only very particular strings link to content.
-Sounds
+Chirps are specified by strings containing 18 characters. Each character selects one of 32 tones; it must be either a digit (0-9) or one of the first 22 lower-case letters (a-v). Eg: ```"ntdb982ilj6etj6e3l"```
 
-The Chirpino library provides two chirp-generator classes: the plain and simple
-Beak, and the fancier-sounding PortamentoBeak.
+When chirps are played, two extra tones (corresponding to tones h and j) are prepended to the 18 characters you supply to make 20 in total. Chirp codes from chirp.io contain some data and some error correction characters based on the data. 
 
-This is what a Beak looks like. Grey depicts volume level, blue frequency (for the example
-chirp code above) and the white columns divide frames (described shortly).
+Chirpino will play any string of the correct length and characters, but only strings from chirp.io contain the valid error correction codes that let listening devices receive them properly, and only very particular strings link to content.
+
+The Chirpino library provides two chirp-generator classes: the plain and simple Beak, and the fancier-sounding PortamentoBeak.
+
+This is what a Beak looks like. Grey depicts volume level, blue frequency (for the example chirp code above) and the white columns divide frames (described shortly).
 
 Beak objects play the codes as 20 pure tones in succession. Each block (corresponding to one character in the code) lasts 87.2 milliseconds, comprises a single frame, and is played at the same volume (which may be specified). The frequency change between tones happens abruptly. Beak's only frill is that the first tone is quickly faded in (the volume is raised from zero) and the last tone is similarly faded out since sudden volume changes tend to create unpleasant clicks.
 
@@ -86,6 +80,7 @@ The second picture shows a PortamentoBeak. These slide the frequency between eac
 A class providing the basic chirp functionality together with a simple volume control.
 
 ### Creation
+
 ```Beak()```
 
 Creates a Beak object initialised to output at full volume (255). 
@@ -103,7 +98,7 @@ The highest volume (255) provides greatest output range and so also the best pot
 The chirp described by chirpStr (see Chirps / Codes above) is played and the method returns when the synthesiser has finished playing, around 1.7 seconds later.
 
 Accepted chirp strings are exactly 18 characters long and use only the digits 0-9 and/or the lowercase letters a-v.
-Chirp returns 0 if all is well, else a warnings value to indicate the problem. See the Trouble example program for a demonstration of the use of warnings.
+Chirp returns 0 if all is well, else a warnings value to indicate the problem. See the 'Trouble' example program for a demonstration of the use of warnings.
 
 ```chirp(chirpStr, enoughSpaceForFrames)```
 
@@ -111,9 +106,7 @@ The first version of chirp allocates temporary space for the frames on the stack
 
 ```chirp(chirpStr, enoughSpaceForFrames)```
 
-The final version allows you to allocate memory as a pre-allocated array of frames. It is primarily for use by the original simple chirp function,
-setVolume(volume)
-The volume (0-255) used by subsequent chirps.
+The final version allows you to allocate memory as a pre-allocated array of frames. It is primarily for use by the original simple chirp function, ```setVolume(volume)``` The volume (0-255) used by subsequent chirps.
 
 ### Constants
 
@@ -141,9 +134,9 @@ creates a PortamentoBeak initialised to the default parameter settings. Equivale
 
 ```PortamentoBeak(minVolume, maxVolume, rampTime)```
 
-minVolume (0-255) specifies the volume that the sound output momentarily ramps to between blocks (see the second diagram in Chirps / Sounds above). Although normally expected to be, it doesn’t have to be smaller than the maxVolume.
-maxVolume (0-255) specifies the volume used for the central sustained frame of each block. Although normally expected to be, it doesn’t have to be larger than the minVolume.
-rampTime (0-1362) specifies the duration of the frames surrounding the central sustained frame as a pulse count. Since pulses are sent every 16 microseconds you can consider these to be 16-microsecond time units. So to calculate the length of rampTime in milliseconds multiply it by 0.016. To calculate the length of the remaining sustained frame subtract twice the rampTime from the total block time.
+```minVolume``` (0-255) specifies the volume that the sound output momentarily ramps to between blocks (see the second diagram in Chirps / Sounds above). Although normally expected to be, it doesn’t have to be smaller than the maxVolume. ```maxVolume``` (0-255) specifies the volume used for the central sustained frame of each block. Although normally expected to be, it doesn’t have to be larger than the minVolume.
+```rampTime``` (0-1362) specifies the duration of the frames surrounding the central sustained frame as a pulse count. Since pulses are sent every 16 microseconds you can consider these to be 16-microsecond time units. So to calculate the length of ```rampTime``` in milliseconds multiply it by 0.016. To calculate the length of the remaining sustained frame subtract twice the rampTime from the total block time.
+
 For example, each block is 5450 pulses long (87.2 ms) and comprises a ramped frame either side of a sustained frame. If you set rampTime to 1000 (16 ms) then the sustained frame will be 3450 pulses (= 5450 - 2*1000), which is 55.2 ms. Alternatively, a rampTime of zero leaves the sustained frame to fill the block and so creates a Beak-style chirp.
 
 ### Methods
@@ -162,8 +155,7 @@ Synth is the only class within Chirpino to interact directly with timer and outp
 
 ### Creation
 
-Synth is a singleton class; the one and only Synth object is available to you in the global
-variable TheSynth. Don't create any other Synth objects. 
+Synth is a singleton class; the one and only Synth object is available to you in the global variable TheSynth. Don't create any other Synth objects. 
 
 #### Methods
 
@@ -204,6 +196,7 @@ A non-zero (warnings & NO_FRAMES_TO_PLAY_WARNING) bit signals that the sound seq
 A non-zero (warnings & LATE_SAMPLE_PULSE_WARNING) bit signals that the tight synthesiser pulse generation loop has been delayed. It should only be possible if you modify the loop to add extra tasks. 
 
 ## Examples
+
 Once Chirpino is installed as a library the examples supplied are available in the IDE menu ```File > Examples > Chirpino > example```. They are designed to be explored in approximately the following order:
 
 1) Simple
@@ -220,6 +213,7 @@ over, with two-second gaps. A good test to check your library is installed and f
 PortamentoBeak is introduced and contrasted with Beak as variants are played to demonstrate how the sound shaping parameters may be used. The main action is within the loop function. nextChirpString is provided as a means to cycle through the list of chirp codes.
 
 ### Trouble
+
 Demonstrates using the warning codes to help troubleshoot problems.
 
 chirp returns a warnings value that you can ignore if you wish, or can pay attention to if you are investigating problems. While all is well warnings is zero, but whenever a problem is spotted a bit is set in the corresponding field.
