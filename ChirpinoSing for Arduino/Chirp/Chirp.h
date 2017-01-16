@@ -12,13 +12,12 @@
 */
 
 
-#ifndef BEAK_H
-#define BEAK_H
+#ifndef CHIRP_H
+#define CHIRP_H
 
 #include "Synth.h"
 
-
-class Beak {
+class Chirp {
 protected:
     static const byte CHIRP_STRING_LENGTH = 18;
     static const uint16_t BLOCK_TIME = 5450; // in number of pulses: 87.2ms = 5450 * 16µs
@@ -27,6 +26,17 @@ protected:
     static const int MINIMUM_FREE_RAM = 100; // need just enough for stack while playing
     
     static const uint32_t PROGMEM phaseSteps[32];
+
+    static const uint16_t MIN_SUSTAIN_TIME = BLOCK_TIME / 2; // somewhat arbitrary
+    static const uint16_t MAX_RAMP_TIME = (BLOCK_TIME - MIN_SUSTAIN_TIME) / 2;
+    static const byte DEFAULT_MIN_VOLUME = 128;
+    static const uint16_t DEFAULT_RAMP_TIME = 750; // 12ms = 750 * 16µs
+    
+    uint16_t rampTime;
+    uint16_t sustainTime;
+    byte minVolume;
+    
+    uint32_t lastPhaseStep;
     
     byte maxVolume;
     
@@ -44,8 +54,10 @@ public:
     static const byte CHIRP_STRING_LENGTH_WARNING = 2;
     static const byte TOO_LITTLE_RAM_WARNING = 4;
 
-    Beak(byte volume = DEFAULT_MAX_VOLUME);
+    Chirp(byte minVolume = DEFAULT_MIN_VOLUME, byte maxVolume = DEFAULT_MAX_VOLUME, uint16_t rampTime = DEFAULT_RAMP_TIME);
     void setVolume(byte volume = DEFAULT_MAX_VOLUME);
+    void setParameters(byte minVolume = DEFAULT_MIN_VOLUME, byte maxVolume = DEFAULT_MAX_VOLUME, uint16_t rampTime = DEFAULT_RAMP_TIME);
+
     
     byte chirp(const char *chirpStr);
     byte chirp(const char *chirpStr, char *enoughSpaceForFrames);

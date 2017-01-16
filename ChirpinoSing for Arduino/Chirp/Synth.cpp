@@ -12,8 +12,8 @@
 */
 
 
-#include <ChirpinoSing.h>
 
+#include "Synth.h"
 
 union U32 {        // 32 bits of data
     uint32_t u;    // view as one 4-byte value

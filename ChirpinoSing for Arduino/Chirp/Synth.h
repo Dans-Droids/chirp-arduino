@@ -17,7 +17,6 @@
 
 #include <Arduino.h>
 
-
 struct SynthFrame {
     // duration expressed as number of pulses, 0 signifying synth to stop
     uint16_t nPulses;

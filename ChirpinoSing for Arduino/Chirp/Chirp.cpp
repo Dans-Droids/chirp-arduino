@@ -12,8 +12,7 @@
 */
 
 #include <alloca.h>
-
-#include <ChirpinoSing.h>
+#include "Chirp.h"
 
 
 /*
@@ -43,7 +42,7 @@ void CreatePhaseStepData() {
 }
 
 */
-const uint32_t PROGMEM Beak::phaseSteps[32] = {
+const uint32_t PROGMEM Chirp::phaseSteps[32] = {
     0xE6AFDUL,  0xF4677UL,  0x102EFEUL, 0x112559UL, 0x122A5AUL, 0x133EE0UL,
     0x1463D8UL, 0x159A3CUL, 0x16E314UL, 0x183F7AUL, 0x19B097UL, 0x1B37A8UL,
     0x1CD5F9UL, 0x1E8CEEUL, 0x205DFDUL, 0x224AB2UL, 0x2454B5UL, 0x267DC2UL,
@@ -53,17 +52,28 @@ const uint32_t PROGMEM Beak::phaseSteps[32] = {
 };
 
 
-Beak::Beak(byte volume) {
-    setVolume(volume);
+Chirp::Chirp(byte minVolume, byte maxVolume, uint16_t rampTime) {
+    setParameters(minVolume, maxVolume, rampTime);
 }
 
-
-void Beak::setVolume(byte volume) {
+void Chirp::setVolume(byte volume) {
     maxVolume = volume;
 }
 
+void Chirp::setParameters(byte minVolume, byte maxVolume, uint16_t rampTime) {
+    this->minVolume = minVolume;
+    this->maxVolume = maxVolume;
+    if(rampTime > MAX_RAMP_TIME) {
+        // clamp rampTime to max
+        rampTime = MAX_RAMP_TIME;
+    }
+    this->rampTime = rampTime;
+    this->sustainTime = BLOCK_TIME - 2 * rampTime;
+}
 
-uint32_t Beak::phaseStepForCharCode(const char charCode) {
+
+
+uint32_t Chirp::phaseStepForCharCode(const char charCode) {
     byte index;
     
     if(charCode >= 'a' && charCode <= 'v') {
@@ -81,28 +91,43 @@ uint32_t Beak::phaseStepForCharCode(const char charCode) {
 }
 
 
-void Beak::head(uint32_t phaseStep) {
-    TheSynth.addFrame(maxVolume, phaseStep, phaseStep, 0, maxVolume); // fade in for duration = maxVolume
+void Chirp::head(uint32_t phaseStep) {
+    lastPhaseStep = 0;
 }
 
 
-void Beak::append(uint32_t phaseStep) {
-    TheSynth.addSustainFrame(BLOCK_TIME, phaseStep, maxVolume);
+void Chirp::append(uint32_t phaseStep) {
+    if(rampTime) {
+        if(lastPhaseStep) {
+            uint32_t boundaryPhaseStep = (lastPhaseStep + phaseStep) / 2; // average the values
+            TheSynth.addFrame(rampTime, lastPhaseStep, boundaryPhaseStep, maxVolume, minVolume); // last frame for *previous* block 
+            TheSynth.addFrame(rampTime, boundaryPhaseStep, phaseStep, minVolume, maxVolume); // first frame for this block
+        }
+        else { // we're at the start, or following a silent block
+            TheSynth.addFrame(rampTime, phaseStep, phaseStep, 0, maxVolume); // first frame for this block no phaseStep ramping
+        }
+    }
+    
+    TheSynth.addSustainFrame(sustainTime, phaseStep, maxVolume); // central frame for this block
+    
+    lastPhaseStep = phaseStep;
 }
 
 
-void Beak::tail(uint32_t phaseStep) {
-    TheSynth.addFrame(maxVolume, phaseStep, phaseStep, maxVolume, 0); // fade out for duration = maxVolume
+void Chirp::tail(uint32_t phaseStep) {
+    if(rampTime && phaseStep) {
+        TheSynth.addFrame(rampTime, phaseStep, phaseStep, maxVolume, 0); // last frame for *previous* block
+    }
 }
 
 
-// head, 2 front door, 18 data/error codes, tail, end marker: (1+2+18+1+1 = 23)
-int16_t Beak::numberOfFrames() {
-    return 23;
+// (2 front door, & 18 data/error codes) * 3 frames for each, plus 1 end marker: (20*3+1 = 61)
+int16_t Chirp::numberOfFrames() {
+    return 61;
 }
 
 
-bool Beak::enoughSpaceFor(size_t size)
+bool Chirp::enoughSpaceFor(size_t size)
 {
     extern int __heap_start, *__brkval;
     int freeRAM = (int) &freeRAM - (__brkval == 0 ? (int) &__heap_start: (int) __brkval);
@@ -110,7 +135,7 @@ bool Beak::enoughSpaceFor(size_t size)
 }
 
 
-byte Beak::chirp(const char *chirpStr) {
+byte Chirp::chirp(const char *chirpStr) {
     int16_t nFrames = numberOfFrames();
     size_t frameStoreSize = sizeof(SynthFrame[nFrames]);
     
@@ -124,12 +149,12 @@ byte Beak::chirp(const char *chirpStr) {
 }
 
 
-byte Beak::chirp(const char *chirpStr, char *enoughSpaceForFrames) {
+byte Chirp::chirp(const char *chirpStr, char *enoughSpaceForFrames) {
    return chirp(chirpStr, numberOfFrames(), (SynthFrame *) enoughSpaceForFrames);
 }
 
 
-byte Beak::chirp(const char *chirpStr, int16_t nFrames, SynthFrame *frames) {
+byte Chirp::chirp(const char *chirpStr, int16_t nFrames, SynthFrame *frames) {
     static const uint32_t hPhaseStep = pgm_read_dword_near(phaseSteps + 17);
     static const uint32_t jPhaseStep = pgm_read_dword_near(phaseSteps + 19);
     uint32_t phaseStep = jPhaseStep;
