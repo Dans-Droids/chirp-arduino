@@ -1,6 +1,6 @@
 /*
-    CHIRPINO SING version 1.0
-    This software is provided by ASIO Ltd trading as Chirp
+    CHIRPINO SING version 3.0
+    This software is provided by Asio Ltd trading as Chirp
 
         http://chirp.io
 
