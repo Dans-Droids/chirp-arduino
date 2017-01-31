@@ -8,8 +8,7 @@
 #######################################
 
 Synth	KEYWORD1
-Beak	KEYWORD1
-PortamentoBeak	KEYWORD1
+Chirp	KEYWORD1
 
 
 #######################################

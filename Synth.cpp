@@ -1,6 +1,6 @@
 /*
-    CHIRPINO SING version 1.0
-    This software is provided by ASIO Ltd trading as Chirp
+    CHIRP version 3.0
+    This software is provided by Asio Ltd trading as Chirp
 
         http://chirp.io
 
@@ -12,8 +12,8 @@
 */
 
 
-#include <ChirpinoSing.h>
 
+#include "Synth.h"
 
 union U32 {        // 32 bits of data
     uint32_t u;    // view as one 4-byte value

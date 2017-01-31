@@ -1,6 +1,6 @@
 /*
-    CHIRPINO SING version 1.0
-    This software is provided by ASIO Ltd trading as Chirp
+    CHIRP version 3.0
+    This software is provided by Asio Ltd trading as Chirp
 
         http://chirp.io
 
@@ -16,7 +16,6 @@
 #define SYNTH_H
 
 #include <Arduino.h>
-
 
 struct SynthFrame {
     // duration expressed as number of pulses, 0 signifying synth to stop
