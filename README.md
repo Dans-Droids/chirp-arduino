@@ -67,16 +67,13 @@ Chirp will play any string of the correct length and characters, but only string
  
 ## Example
 
-Once Chirp is installed as a library the examples supplied are available in the IDE menu ```File > Examples > Chirp > Example```. They are designed to be explored in approximately the following order:
+Once Chirp is installed as a library an example is supplied in the IDE menu ```File > Examples > Chirp > Example```. 
 
-A minimal program. A Chirp object is created and is used to chirp a specific code over and
-over, with two-second gaps. A good test to check your library is installed and functioning.
+Here, a Chirp object is created and is used to chirp a specific code over and over, with two-second gaps. A good test to check your library is installed and functioning.
 
 ### Trouble
 
-Demonstrates using the warning codes to help troubleshoot problems.
-
-chirp returns a warnings value that you can ignore if you wish, or can pay attention to if you are investigating problems. While all is well warnings is zero, but whenever a problem is spotted a bit is set in the corresponding field.
+The chirp instance returns a warnings value that you can ignore if you wish, or can pay attention to if you are investigating problems. While all is well warnings is zero, but whenever a problem is spotted a bit is set in the corresponding field.
 
 Trouble and the subsequent example write to the Arduino IDE serial monitor at 9600 baud so you should open the monitor and set it to this speed to see the messages. Serial output is sent asynchronously using interrupts after the print command returns, but chirping turns off these interrupts so serial output may be delayed or lost. As demonstrated here, the simplest way to avoid this is to use delay to wait a while to allow the serial output to finish before issuing a chirp.
 
