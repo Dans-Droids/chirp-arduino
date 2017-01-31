@@ -30,7 +30,7 @@ protected:
     static const uint16_t MIN_SUSTAIN_TIME = BLOCK_TIME / 2; // somewhat arbitrary
     static const uint16_t MAX_RAMP_TIME = (BLOCK_TIME - MIN_SUSTAIN_TIME) / 2;
     static const byte DEFAULT_MIN_VOLUME = 128;
-    static const uint16_t DEFAULT_RAMP_TIME = 240; // 12ms = 750 * 16µs
+    static const uint16_t DEFAULT_RAMP_TIME = 240; // 3.8ms = 240 * 16µs
     
     uint16_t rampTime;
     uint16_t sustainTime;
