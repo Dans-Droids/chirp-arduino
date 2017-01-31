@@ -1,5 +1,5 @@
 /*
-    CHIRPINO version 1.0
+    CHIRPINO SING version 1.0
     This software is provided by ASIO Ltd trading as Chirp
 
         http://chirp.io
@@ -11,16 +11,21 @@
     Have fun
 */
 
-
-#ifndef COMMANDS_H
-#define COMMANDS_H
+// Example 1: Chirping doesn't have to be complicated
 
 
-bool doCommand(char *command);
-void runScript(char *script);
-int doSparkCommand(String commandString);
-
-void processSerialCommands();
+#include <ChirpinoSing.h>
 
 
-#endif
+// Change Beak to PortamentoBeak for a different sound
+Beak beak;
+
+
+void setup() {
+}
+
+
+void loop() {
+    beak.chirp("769jhvac9dm282qo58");
+    delay(2000);
+}

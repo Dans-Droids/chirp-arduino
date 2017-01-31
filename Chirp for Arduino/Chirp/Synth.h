@@ -1,5 +1,5 @@
 /*
-    CHIRPINO version 1.0
+    CHIRPINO SING version 1.0
     This software is provided by ASIO Ltd trading as Chirp
 
         http://chirp.io
@@ -15,6 +15,7 @@
 #ifndef SYNTH_H
 #define SYNTH_H
 
+#include <Arduino.h>
 
 struct SynthFrame {
     // duration expressed as number of pulses, 0 signifying synth to stop
@@ -24,22 +25,19 @@ struct SynthFrame {
     int32_t amplitudeGradient; // fixed point 16:16 (16 integer and 16 fractional bits)
 
     uint32_t phaseStep; // fixed point 16:16
-
+    
     int16_t phaseStepGradient; // just the fractional part (fixed point 0:16)
 };
 
 
-extern uint16_t MaxLoopTime;
-
-
-class Synth {
+class Synth {    
     byte nFrames;          // number of frames in frame array
     SynthFrame *theFrames; // points to start of frame array
     SynthFrame *putFrame;  // points to next frame location to be written to
 
 public:
-    Synth();
-
+    Synth();    
+    
     static const byte FRAME_STORE_FULL_WARNING = 128;
     static const byte NO_FRAMES_TO_PLAY_WARNING = 64;
     static const byte MISSING_END_FRAME_WARNING = 32;
@@ -50,7 +48,7 @@ public:
     void addFrame(uint16_t duration, uint32_t startPhaseStep, uint32_t endPhaseStep, byte startVolume, byte endVolume);
     void addSustainFrame(uint16_t duration, uint32_t phaseStep, byte volume);
     void endFrameSequence();
-
+    
     byte play();
 };
 
